@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Entities.Advertisement>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<title>İlanlar</title>
+<br />
+<h2>İlan Listesi</h2>
+<br />
+
+<style type="text/css">
+    /*table, th, td {
+        vertical-align:middle;
+    }*/
+    #adv{
+        vertical-align:middle;
+    }
+</style>
+
+<table style="text-align:center;" class="table table-bordered table-hover"> 
+    <thead>
+        <tr>
+            <th>Resim</th>
+            <th>Marka</th>
+            <th>Model</th>
+            <th>İlan No</th>
+            <th>İlan Başlığı</th>
+            <th>Yıl</th>
+            <th>KM</th>
+            <th>Renk</th>
+            <th>Fiyat</th>
+            <th>Durumu</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td id="adv">
+                <img src="~/Resources/@item.Car.Picture1" width="125" height="75"/>
+            </td>
+            <td id="adv">
+                @Html.DisplayFor(x => item.Car.Model.Brand.BrandName)
+            </td>
+            <td id="adv">
+                @Html.DisplayFor(x => item.Car.Model.ModelName)
+            </td>
+            <td id="adv">
+                @Html.DisplayFor(x => item.No)
+            </td>
+            <td id="adv">
+                @Html.DisplayFor(x => item.Header)
+            </td>
+            <td id="adv">
+                @Html.DisplayFor(x => item.Car.Year.Value.Year)
+            </td>
+            <td id="adv">
+                @Html.DisplayFor(x => item.Car.KM)
+            </td>
+            <td id="adv">
+                @Html.DisplayFor(x => item.Car.Color.ColorName)
+            </td>
+            <td id="adv">
+                @Html.DisplayFor(x => item.Car.Price)
+            </td>
+            <td id="adv">
+                @if (item.State.Value == true)
+                {
+                <div>Araç İlanda ...</div>
+                }
+                else
+                {
+                <div>Araç İlandan Kaldırılmış ...</div>
+                }
+            </td>
+            <td id="adv">
+                @Html.ActionLink("Güncelle", "Update", new { id = item.AdvId }, new { @class = "btn btn-success" })
+            </td>
+            <td id="adv">
+                @Html.ActionLink("Sil", "Delete", new { id = item.AdvId }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+

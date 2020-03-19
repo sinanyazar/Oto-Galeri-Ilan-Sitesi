@@ -1,0 +1,298 @@
+﻿@model Entities.Advertisement
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<title>Detay</title>
+
+<div style="height:50px;"></div>
+
+<style>
+    #tdInfo {
+        font-weight: 700;
+    }
+</style>
+<div class="container body-content">
+    <table>
+        <tbody>
+            <tr>
+                <td colspan="2"><div style="text-align:center;"><h4>@Model.Header  ---  @String.Format("{0:C2}", Model.Car.Price)</h4></div></td>
+            </tr>
+            <tr>
+                <td colspan="2"><hr /></td>
+            </tr>
+            <tr>
+                <td width="40%">
+                    <img width="400" height="300" style="margin-right:50px;" src="~/Resources/@Model.Car.Picture1" />
+                </td>
+                <td>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td id="tdInfo" width="150">İlan No</td>
+                                <td id="tdInfo">:</td>
+                                <td>@Model.No</td>
+                            </tr>
+                            <tr>
+                                <td id="tdInfo">İlan Tarihi</td>
+                                <td id="tdInfo">:</td>
+                                <td>@Model.Date.Value.ToString("dd MMMM yyyy")</td>
+                            </tr>
+                            <tr>
+                                <td id="tdInfo">Marka</td>
+                                <td id="tdInfo">:</td>
+                                <td>@Model.Car.Model.Brand.BrandName</td>
+                            </tr>
+                            <tr>
+                                <td id="tdInfo">Model</td>
+                                <td id="tdInfo">:</td>
+                                <td>@Model.Car.Model.ModelName</td>
+                            </tr>
+                            <tr>
+                                <td id="tdInfo">Yıl</td>
+                                <td id="tdInfo">:</td>
+                                <td>@Model.Car.Year.Value.Year</td>
+                            </tr>
+                            <tr>
+                                <td id="tdInfo">Yakıt</td>
+                                <td id="tdInfo">:</td>
+                                <td>@Model.Car.Fuel.FuelName</td>
+                            </tr>
+                            <tr>
+                                <td id="tdInfo">Vites</td>
+                                <td id="tdInfo">:</td>
+                                <td>@Model.Car.Gear.GearName</td>
+                            </tr>
+                            <tr>
+                                <td id="tdInfo">Renk</td>
+                                <td id="tdInfo">:</td>
+                                <td>@Model.Car.Color.ColorName</td>
+                            </tr>
+                            <tr>
+                                <td id="tdInfo">KM</td>
+                                <td id="tdInfo">:</td>
+                                <td>
+                                    @if (Model.Car.KM != 0)
+                                    {
+                                        @String.Format("{0:0,0}", Model.Car.KM)
+
+                                    }
+                                    else
+                                    {
+                                        @Model.Car.KM
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="tdInfo">Motor Gücü</td>
+                                <td id="tdInfo">:</td>
+                                <td>@Model.Car.HP HP</td>
+                            </tr>
+                            <tr>
+                                <td id="tdInfo">Motor Hacmi</td>
+                                <td id="tdInfo">:</td>
+                                <td>@Model.Car.EngineCapacity CC</td>
+                            </tr>
+                            <tr>
+                                <td id="tdInfo">Durumu</td>
+                                <td id="tdInfo">:</td>
+                                <td>
+                                    @if (Model.State.Value == true)
+                                    {
+                                        <div>İkinci El</div>
+                                    }
+                                    else
+                                    {
+                                        <div>Sıfır</div>
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><hr /><br /><strong style="text-decoration:underline;font-size:x-large;">Donanım</strong><br /><br /></td>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td id="tdInfo" width="125">ABS</td>
+                            <td id="tdInfo" width="20">:</td>
+                            <td>
+                                @if (Model.Car.ABS.Value == true)
+                                {
+                                    <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
+                                }
+                                else
+                                {
+                                    <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="tdInfo" width="100">Klima</td>
+                            <td id="tdInfo" width="20">:</td>
+                            <td>
+                                @if (Model.Car.AC.Value == true)
+                                {
+                                    <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
+                                }
+                                else
+                                {
+                                    <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="tdInfo" width="100">Hava Yastığı</td>
+                            <td id="tdInfo" width="20">:</td>
+                            <td>
+                                @if (Model.Car.Airbag.Value == true)
+                                {
+                                    <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
+                                }
+                                else
+                                {
+                                    <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="tdInfo" width="100">Bluetooth</td>
+                            <td id="tdInfo" width="20">:</td>
+                            <td>
+                                @if (Model.Car.Bluetooth.Value == true)
+                                {
+                                    <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
+                                }
+                                else
+                                {
+                                    <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="tdInfo" width="100">ESP</td>
+                            <td id="tdInfo" width="20">:</td>
+                            <td>
+                                @if (Model.Car.ESP.Value == true)
+                                {
+                                    <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
+                                }
+                                else
+                                {
+                                    <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="tdInfo" width="100">Sunroof</td>
+                            <td id="tdInfo" width="20">:</td>
+                            <td>
+                                @if (Model.Car.Sunroof.Value == true)
+                                {
+                                    <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
+                                }
+                                else
+                                {
+                                    <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
+                                }
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <td id="tdInfo" width="200">Yokuş Kalkış Desteği</td>
+                            <td id="tdInfo" width="20">:</td>
+                            <td>
+                                @if (Model.Car.HillSupport.Value == true)
+                                {
+                                    <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
+                                }
+                                else
+                                {
+                                    <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="tdInfo" width="100">Deri Koltuk</td>
+                            <td id="tdInfo" width="20">:</td>
+                            <td>
+                                @if (Model.Car.LeatherCouch.Value == true)
+                                {
+                                    <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
+                                }
+                                else
+                                {
+                                    <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="tdInfo" width="100">Navigasyon</td>
+                            <td id="tdInfo" width="20">:</td>
+                            <td>
+                                @if (Model.Car.Navigation.Value == true)
+                                {
+                                    <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
+                                }
+                                else
+                                {
+                                    <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="tdInfo" width="100">Park Sensörü</td>
+                            <td id="tdInfo" width="20">:</td>
+                            <td>
+                                @if (Model.Car.ParkingSensor.Value == true)
+                                {
+                                    <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
+                                }
+                                else
+                                {
+                                    <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="tdInfo" width="100">Yol Bilgisayarı</td>
+                            <td id="tdInfo" width="20">:</td>
+                            <td>
+                                @if (Model.Car.TripComputer.Value == true)
+                                {
+                                    <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
+                                }
+                                else
+                                {
+                                    <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="tdInfo" width="100">Xenon Far</td>
+                            <td id="tdInfo" width="20">:</td>
+                            <td>
+                                @if (Model.Car.XenonFar.Value == true)
+                                {
+                                    <i style="color:green" class="fa fa-check" aria-hidden="true"></i>
+                                }
+                                else
+                                {
+                                    <i style="color:red" class="fa fa-times" aria-hidden="true"></i>
+                                }
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

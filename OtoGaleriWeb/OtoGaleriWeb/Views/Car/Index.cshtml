@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Entities.Car>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<title>Araçlar</title>
+<br />
+<h2>&emsp;Araç Listesi</h2>
+<br />
+<style type="text/css">
+    #carTd{
+        text-align:center;
+        vertical-align:middle;
+    }
+</style>
+<div>
+    @Html.ActionLink("Yeni Araba Ekle", "Create", new { }, new { @class = "btn btn-primary", @style = "margin-left:50px;" })
+</div>
+<br />
+<table style="text-align:center;" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Araç Id</th>
+            <th>Araç Resim</th>
+            <th>Marka</th>
+            <th>Model</th>
+            <th>Detay</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td id="carTd">
+                @Html.DisplayFor(x => item.CarId)
+            </td>
+            <td id="carTd">
+                <img src="~/Resources/@item.Picture1" width="125" height="75"/>
+            </td>
+            <td id="carTd">
+                @Html.DisplayFor(x => item.Model.Brand.BrandName)
+            </td>
+            <td id="carTd">
+                @Html.DisplayFor(x => item.Model.ModelName)
+            </td>
+            <td id="carTd">
+                @Html.DisplayFor(x => item.Details)
+            </td>
+            <td id="carTd">
+                @Html.ActionLink("Güncelle", "Update", new { id = item.CarId }, new { @class = "btn btn-success" })
+            </td>
+            <td id="carTd">
+                @Html.ActionLink("Sil", "Delete", new { id = item.CarId }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+

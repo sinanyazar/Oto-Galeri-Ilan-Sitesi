@@ -1,0 +1,321 @@
+﻿
+@{
+    ViewBag.Title = "Anasayfa";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+@model IEnumerable<Entities.Advertisement>
+<title>@ViewBag.Title</title>
+<style>
+    [data-toggle="collapse"][aria-expanded="true"] > .js-rotate-if-collapsed {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    #txtFilter {
+        width: 50px;
+        font-size: small;
+        text-align: center;
+    }
+
+    [data-href] {
+        cursor: pointer;
+    }
+
+    th {
+        text-align: center;
+    }
+
+    #advRow {
+        text-align: center;
+        vertical-align: middle;
+    }
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('*[data-href]').on('click', function () {
+            window.location = $(this).data("href");
+        });
+    });
+    
+    $(document).ready(function () {
+        $('#brand').change(function () {
+            var id = $(this).val();
+            var modelList = $('#model');
+
+            modelList.empty();
+
+            $('#model').attr('disabled', false);
+
+            $.ajax({
+                url: '/User/GetModels' + "?brandId=" + id,
+                type: 'POST',
+                dataType: 'Json',
+                data: { 'id': id },
+                success: function (data) {
+                    $.each(data, function (index, option) {
+                        modelList.append('<option value=' + option.Value + '>' + option.Text + '</option> ');
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+@using (Html.BeginForm("Filter", "User", FormMethod.Post))
+{
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <td style="width:200px;">
+                    <div id="accordion">
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h5 class="mb-0">
+                                    <a style="text-decoration:none;color:cornflowerblue;" href="#" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Araç &emsp;&emsp;&emsp;&nbsp;&nbsp; <i class="fas fa-angle-down fa-rotate-270 js-rotate-if-collapsed"></i>
+                                    </a>
+                                </h5>
+                            </div>
+
+                            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="dropdown show">
+                                        @Html.DropDownList("brand", (SelectList)ViewBag.BrandList, "Marka Seçiniz", new { @class = "dropdown form-control" }) <br />
+                                        @Html.DropDownList("model", Enumerable.Empty<SelectListItem>() , "Model Seçiniz", new { @class = "dropdown form-control", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingThree">
+                                <h5 class="mb-0">
+                                    <a style="text-decoration:none;color:cornflowerblue;" href="#" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Yıl &emsp;&emsp;&emsp;&emsp;&nbsp; <i class="fas fa-angle-down fa-rotate-270 js-rotate-if-collapsed"></i>
+                                    </a>
+                                </h5>
+                            </div>
+
+                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                                <div class="card-body">
+                                    <input type="text" style="width:50px;" id="txtFilter" name="txtMinYear" placeholder="Min Yıl" /> -
+                                    <input type="text" style="width:50px;" id="txtFilter" name="txtMaxYear" placeholder="Max Yıl" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingFour">
+                                <h5 class="mb-0">
+                                    <a style="text-decoration:none;color:cornflowerblue;" href="#" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        Fiyat &emsp;&emsp;&emsp;&nbsp; <i class="fas fa-angle-down fa-rotate-270 js-rotate-if-collapsed"></i>
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                                <div class="card-body">
+                                    <input type="text" style="width:59px;" id="txtFilter" name="txtMinPrice" placeholder="Min Fiyat" /> -
+                                    <input type="text" style="width:59px;" id="txtFilter" name="txtMaxPrice" placeholder="Max Fiyat" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingFive">
+                                <h5 class="mb-0">
+                                    <a style="text-decoration:none;color:cornflowerblue;" href="#" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                        KM &emsp;&emsp;&emsp;&emsp; <i class="fas fa-angle-down fa-rotate-270 js-rotate-if-collapsed"></i>
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                                <div class="card-body">
+                                    <input type="text" style="width:50px;" id="txtFilter" name="txtMinKm" placeholder="Min KM" /> -
+                                    <input type="text" style="width:50px;" id="txtFilter" name="txtMaxKm" placeholder="Max KM" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingSix">
+                                <h5 class="mb-0">
+                                    <a style="text-decoration:none;color:cornflowerblue;" href="#" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                        Vites &emsp;&emsp;&emsp;&nbsp; <i class="fas fa-angle-down fa-rotate-270 js-rotate-if-collapsed"></i>
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkGearManuel" name="chkGear" value="1" />
+                                        <label class="form-check-label" for="chkGearManuel">Manuel</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkGearHalfOto" name="chkGear" value="2" />
+                                        <label class="form-check-label" for="chkGearHalfOto">Yarı Otomatik</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkGearFullOto" name="chkGear" value="3" />
+                                        <label class="form-check-label" for="chkGearFullOto">Tam Otomatik</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingSeven">
+                                <h5 class="mb-0">
+                                    <a style="text-decoration:none;color:cornflowerblue;" href="#" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                        Yakıt &emsp;&emsp;&emsp;&nbsp; <i class="fas fa-angle-down fa-rotate-270 js-rotate-if-collapsed"></i>
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkFuelBenzin" name="chkFuel" value="1" />
+                                        <label class="form-check-label" for="chkFuelBenzin">Benzin</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkFuelLPG" name="chkFuel" value="2" />
+                                        <label class="form-check-label" for="chkFuelLPG">Benzin & LPG</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkFuelDizel" name="chkFuel" value="3" />
+                                        <label class="form-check-label" for="chkFuelDizel">Dizel</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkFuelHybrid" name="chkFuel" value="4" />
+                                        <label class="form-check-label" for="chkFuelHybrid">Hybrid</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkFuelElectric" name="chkFuel" value="5" />
+                                        <label class="form-check-label" for="chkFuelElectric">Elektrik</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingEight">
+                                <h5 class="mb-0">
+                                    <a style="text-decoration:none;color:cornflowerblue;" href="#" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                        Renk &emsp;&emsp;&emsp;&nbsp; <i class="fas fa-angle-down fa-rotate-270 js-rotate-if-collapsed"></i>
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkColorWhite" name="chkColor" value="1" />
+                                        <label class="form-check-label" for="chkColorWhite">Beyaz</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkColorBordo" name="chkColor" value="2" />
+                                        <label class="form-check-label" for="chkColorBordo">Bordo</label>
+                                    </div>
+                                    <br />
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkColorGrey" name="chkColor" value="3" />
+                                        <label class="form-check-label" for="chkColorGrey">Gri</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkColorSilver" name="chkColor" value="4" />
+                                        <label class="form-check-label" for="chkColorSilver">Gümüş Gri</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkColorBrown" name="chkColor" value="5" />
+                                        <label class="form-check-label" for="chkColorBrown">Kahverengi</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkColorRed" name="chkColor" value="6" />
+                                        <label class="form-check-label" for="chkColorRed">Kırmızı</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkColorNavyBlue" name="chkColor" value="7" />
+                                        <label class="form-check-label" for="chkColorNavyBlue">Lacivert</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkColorBlue" name="chkColor" value="8" />
+                                        <label class="form-check-label" for="chkColorBlue">Mavi</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkColorBlack" name="chkColor" value="9" />
+                                        <label class="form-check-label" for="chkColorBlack">Siyah</label>
+                                    </div>
+                                    <br />
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="chkColorBlack" name="chkColor" value="10" />
+                                        <label class="form-check-label" for="chkColorBlack">Yeşil</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingNine">
+                                <h5 class="mb-0">
+                                    <a style="text-decoration:none;color:cornflowerblue;" href="#" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                                        Durumu &emsp;&nbsp;&nbsp;&nbsp; <i class="fas fa-angle-down fa-rotate-270 js-rotate-if-collapsed"></i>
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordion">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="radioNew" id="radioNew" value="true">
+                                    <label class="form-check-label" for="radioNew">Sıfır</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="radioNew" id="radioOld" value="false">
+                                    <label class="form-check-label" for="radioOld">İkinci El</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <br />
+                            <button type="submit" class="btn btn-success col-sm-12">ARA</button>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Resim</th>
+                                <th>Marka</th>
+                                <th>Model</th>
+                                <th>İlan Başlığı</th>
+                                <th>Yıl</th>
+                                <th>KM</th>
+                                <th>Renk</th>
+                                <th>Fiyat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr data-href="Detail/@item.AdvId">
+                                    <td id="advRow" style="width:125px;"><img width="125" height="75" src="~/Resources/@item.Car.Picture1" /></td>
+                                    <td id="advRow">@item.Car.Model.Brand.BrandName</td>
+                                    <td id="advRow">@item.Car.Model.ModelName</td>
+                                    <td id="advRow">@item.Header</td>
+                                    <td id="advRow">@item.Car.Year.Value.Year</td>
+                                    <td id="advRow">
+                                        @if (item.Car.KM != 0)
+                                        {
+                                            @String.Format("{0:0,0}", item.Car.KM)
+
+                                        }
+                                        else
+                                        {
+                                            @item.Car.KM
+                                        }
+                                    </td>
+                                    <td id="advRow">@item.Car.Color.ColorName</td>
+                                    <td id="advRow">@String.Format("{0:C2}", item.Car.Price)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+

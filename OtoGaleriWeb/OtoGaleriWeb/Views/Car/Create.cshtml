@@ -1,0 +1,373 @@
+﻿@model Entities.Car
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<title>Ekle</title>
+<br />
+<h2>&emsp;Yeni Araç Ekle</h2>
+<br />
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ekle</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#BrandId').change(function () {
+            var id = $(this).val();
+            var modelList = $('#ModelId');
+
+            modelList.empty();
+
+            $('#ModelId').attr('disabled', false);
+
+            $.ajax({
+                url: '/Car/GetModels' + "?brandId=" + id,
+                type: 'POST',
+                dataType: 'Json',
+                data: { 'id': id },
+                success: function (data) {
+                    $.each(data, function (index, option) {
+                        modelList.append('<option value=' + option.Value + '>' + option.Text + '</option> ');
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+<div class="container">
+    @using (Html.BeginForm("Create", "Car", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div style="text-decoration-line:underline;">
+            <h5>Araç Özellikleri</h5>
+        </div>
+        <br />
+        <div class="form-group">
+            <b>@Html.Label("Marka", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-10">
+                @Html.DropDownList("BrandId", (SelectList)ViewBag.BrandList, "Marka Seçiniz ...", new { @class = "dropdown form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Model", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-10">
+                @Html.DropDownList("ModelId", Enumerable.Empty<SelectListItem>(), "Model Seçiniz", new { @class = "dropdown form-control", @disabled = "disabled" })
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Yakıt Tipi", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.FuelId, (SelectList)ViewBag.FuelList, "Yakıt Tipini Seçiniz ...", new { @class = "dropdown form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Vites Tipi", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.GearId, (SelectList)ViewBag.GearList, "Vites Tipini Seçiniz ...", new { @class = "dropdown form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Araç Rengi", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.ColorId, (SelectList)ViewBag.ColorList, "Araç Rengini Seçiniz ...", new { @class = "dropdown form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Araç Yıl", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-10">
+                <div class="well">
+                    <input id="datepicker" name="Year" width="276" />
+                    <script type="text/javascript">
+                        $('#datepicker').datepicker({
+                            uiLibrary: 'bootstrap4',
+                            format: 'dd/mm/yyyy'
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Araç KM", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-10">
+                @Html.EditorFor(x => x.KM, new { htmlAttributes = new { @class = "form-control", @placeholder = "Araç KM Giriniz ..." } })
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Araç Fiyatı", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-10">
+                @Html.EditorFor(x => x.Price, new { htmlAttributes = new { @class = "form-control", @placeholder = "Araç Fiyatını Giriniz ..." } })
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Motor Gücü", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-10">
+                @Html.EditorFor(x => x.HP, new { htmlAttributes = new { @class = "form-control", @placeholder = "Motor Gücünü Giriniz ..." } })
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Motor Hacmi", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-10">
+                @Html.EditorFor(x => x.EngineCapacity, new { htmlAttributes = new { @class = "form-control", @placeholder = "Motor Hacmini Giriniz ..." } })
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Araç Durumu", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.Label("Sıfır")
+                        @Html.RadioButtonFor(x => x.State, "true")
+                    </div>
+
+                    <div class="col-md-5">
+                        @Html.Label("İkinci El")
+                        @Html.RadioButtonFor(x => x.State, "false")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Araç Detayı", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-10">
+                @Html.TextAreaFor(x => x.Details, htmlAttributes: new { @class = "form-control", @placeholder = "Araç Detayını Giriniz ..." })
+            </div>
+        </div>
+
+        <div style="text-decoration-line:underline;">
+            <h5>Araç Donanımları</h5>
+        </div>
+        <br />
+        <div class="form-group">
+            <b>@Html.Label("ABS", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.Label("Var")
+                        @Html.RadioButtonFor(x => x.ABS, "true")
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.Label("Yok")
+                        @Html.RadioButtonFor(x => x.ABS, "false")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("ESP", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.Label("Var")
+                        @Html.RadioButtonFor(x => x.ESP, "true")
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.Label("Yok")
+                        @Html.RadioButtonFor(x => x.ESP, "false")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Yokuş Kalkış Desteği", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.Label("Var")
+                        @Html.RadioButtonFor(x => x.HillSupport, "true")
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.Label("Yok")
+                        @Html.RadioButtonFor(x => x.HillSupport, "false")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Hava Yastığı", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.Label("Var")
+                        @Html.RadioButtonFor(x => x.Airbag, "true")
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.Label("Yok")
+                        @Html.RadioButtonFor(x => x.Airbag, "false")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Sunroof", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.Label("Var")
+                        @Html.RadioButtonFor(x => x.Sunroof, "true")
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.Label("Yok")
+                        @Html.RadioButtonFor(x => x.Sunroof, "false")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Deri Koltuk", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.Label("Var")
+                        @Html.RadioButtonFor(x => x.LeatherCouch, "true")
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.Label("Yok")
+                        @Html.RadioButtonFor(x => x.LeatherCouch, "false")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Yol Bilgisayarı", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.Label("Var")
+                        @Html.RadioButtonFor(x => x.TripComputer, "true")
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.Label("Yok")
+                        @Html.RadioButtonFor(x => x.TripComputer, "false")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Klima", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.Label("Var")
+                        @Html.RadioButtonFor(x => x.AC, "true")
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.Label("Yok")
+                        @Html.RadioButtonFor(x => x.AC, "false")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Park Sensörü", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.Label("Var")
+                        @Html.RadioButtonFor(x => x.ParkingSensor, "true")
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.Label("Yok")
+                        @Html.RadioButtonFor(x => x.ParkingSensor, "false")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Xenon Far", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.Label("Var")
+                        @Html.RadioButtonFor(x => x.XenonFar, "true")
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.Label("Yok")
+                        @Html.RadioButtonFor(x => x.XenonFar, "false")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Bluetooth", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.Label("Var")
+                        @Html.RadioButtonFor(x => x.Bluetooth, "true")
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.Label("Yok")
+                        @Html.RadioButtonFor(x => x.Bluetooth, "false")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Navigasyon", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.Label("Var")
+                        @Html.RadioButtonFor(x => x.Navigation, "true")
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.Label("Yok")
+                        @Html.RadioButtonFor(x => x.Navigation, "false")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("USB / AUX", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.Label("Var")
+                        @Html.RadioButtonFor(x => x.USB_AUX, "true")
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.Label("Yok")
+                        @Html.RadioButtonFor(x => x.USB_AUX, "false")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <b>@Html.Label("Resim", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+            <div class="col-md-10">
+                <input type="file" name="file" id="uploadfile" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ekle" class="btn btn-success" />
+            </div>
+        </div>
+    }
+    <div>
+        @Html.ActionLink("Geri Dön", "Index", null, new { @class = "btn btn-primary" })
+    </div>
+</div>

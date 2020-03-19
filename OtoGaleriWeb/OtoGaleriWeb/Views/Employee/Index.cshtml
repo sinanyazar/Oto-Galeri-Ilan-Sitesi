@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Entities.User>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<title>Çalışanlar</title>
+<br />
+<h2>&emsp;Personel Listesi</h2>
+<br />
+
+<div>
+    @Html.ActionLink("Yeni Personel Kayıt", "Create", new { }, new { @class = "btn btn-primary", @style = "margin-left:50px;"})
+</div>
+<br />
+
+<table style="text-align:center" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Personel Id</th>
+            <th>Personel İsmi</th>
+            <th>Kullanıcı Adı</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(x => item.UserID)
+            </td>
+            <td>
+                @Html.DisplayFor(x => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(x => item.UserName)
+            </td>
+            <td>
+                @Html.ActionLink("Güncelle", "Update", new { id = item.UserID }, new { @class = "btn btn-success" })
+            </td>
+            <td>
+                @Html.ActionLink("Sil", "Delete", new { id = item.UserID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

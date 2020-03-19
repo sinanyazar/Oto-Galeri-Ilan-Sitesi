@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Entities.Model>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<title>Model Listesi</title>
+<br />
+<h2>&emsp;Model Listeleme Sayfası</h2>
+<br />
+
+<div>
+    @Html.ActionLink("Yeni Model Ekle", "Create", new { } , new { @class = "btn btn-primary", @style = "margin-left:50px;"})
+</div>
+<br />
+
+<table style="text-align:center;" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Marka İsmi</th>
+            <th>Model İsmi</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.Brand.BrandName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.ModelName)
+                </td>
+                <td>
+                    @Html.ActionLink("Güncelle", "Update", new { id = item.ModelId }, new { @class = "btn btn-success"})
+                </td>
+                <td>
+                    @Html.ActionLink("Sil", "Delete", new { id = item.ModelId } , new { @class = "btn btn-danger"})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

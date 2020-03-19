@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Entities;
+
+namespace Data.Repositories
+{
+    public class AdvertisementRepository : BaseRepository<Advertisement>
+    {
+        public AdvertisementRepository(GaleriDBEntities dbContext) : base(dbContext)
+        {
+        }
+    }
+}

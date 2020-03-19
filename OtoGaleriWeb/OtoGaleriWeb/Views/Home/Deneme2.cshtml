@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Entities.Gear>
+@{
+    ViewBag.Title = "Deneme2";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2>Deneme2</h2>
+@foreach (var item in Model)
+{
+    @Html.DisplayFor(modelItem => item.GearName)
+}

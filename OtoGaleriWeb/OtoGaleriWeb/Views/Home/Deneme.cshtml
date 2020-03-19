@@ -1,0 +1,210 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Anasayfa</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <style>
+        [data-toggle="collapse"][aria-expanded="true"] > .js-rotate-if-collapsed {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        #txtFilter {
+            width: 50px;
+            font-size: small;
+            text-align:center;
+        }
+        .navbar .dropdown-menu .form-control {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Oto Galeri</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            @*<ul class="navbar-nav">*@
+            <ul class="navbar-nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Anasayfa</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Hakkımızda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">İletişim</a>
+                </li>
+            </ul>
+        </div>
+        <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown order-1">
+                    <a class="nav-link" href="#" data-toggle="dropdown"> <i class="fas fa-user"></i> Giriş Yap</a>
+                    <ul class="dropdown-menu dropdown-menu-right mt-2">
+                        <li class="px-3 py-2">
+                            <form class="form" role="form">
+                                <div class="form-group">
+                                    <input id="emailInput" placeholder="Kullanıcı Adı" class="form-control form-control-sm" type="text" required="">
+                                </div>
+                                <div class="form-group">
+                                    <input id="passwordInput" placeholder="Şifre" class="form-control form-control-sm" type="text" required="">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">Giriş</button>
+                                </div>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <td style="width:200px;">
+                    <div id="accordion">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button style="text-decoration:none;" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                        Yıl &emsp;&emsp;&emsp;&emsp;&nbsp; <i class="fas fa-angle-down fa-rotate-270 js-rotate-if-collapsed"></i>
+                                    </button>
+                                </h5>
+                            </div>
+
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div class="card-body">
+                                    <input type="text" style="width:50px;" id="txtFilter" name="txtMinYear" placeholder="Min Yıl" /> -
+                                    <input type="text" style="width:50px;" id="txtFilter" name="txtMaxYear" placeholder="Max Yıl" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h5 class="mb-0">
+                                    <button style="text-decoration:none;" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Fiyat &emsp;&emsp;&emsp;&nbsp; <i class="fas fa-angle-down fa-rotate-270 js-rotate-if-collapsed"></i>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                <div class="card-body">
+                                    <input type="text" style="width:59px;" id="txtFilter" name="txtMinPrice" placeholder="Min Fiyat" /> -
+                                    <input type="text" style="width:59px;" id="txtFilter" name="txtMaxPrice" placeholder="Max Fiyat" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingThree">
+                                <h5 class="mb-0">
+                                    <button style="text-decoration:none;" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        KM &emsp;&emsp;&emsp;&emsp; <i class="fas fa-angle-down fa-rotate-270 js-rotate-if-collapsed"></i>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                                <div class="card-body">
+                                    <input type="text" style="width:50px;" id="txtFilter" name="txtMinKm" placeholder="Min KM" /> -
+                                    <input type="text" style="width:50px;" id="txtFilter" name="txtMaxKm" placeholder="Max KM" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingFour">
+                                <h5 class="mb-0">
+                                    <button style="text-decoration:none;" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                                        Vites &emsp;&emsp;&emsp;&nbsp; <i class="fas fa-angle-down fa-rotate-270 js-rotate-if-collapsed"></i>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                                <div class="card-body">
+                                    <input type="checkbox" id="chkGear" name="chkGearManuel" /> Manuel <br />
+                                    <input type="checkbox" id="chkGear" name="chkGearHalfOto" /> Yarı Otomatik <br />
+                                    <input type="checkbox" id="chkGear" name="chkGearFullOto" /> Tam Otomatik
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingFive">
+                                <h5 class="mb-0">
+                                    <button style="text-decoration:none;" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
+                                        Yakıt &emsp;&emsp;&emsp;&nbsp; <i class="fas fa-angle-down fa-rotate-270 js-rotate-if-collapsed"></i>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                                <div class="card-body">
+                                    <input type="checkbox" id="chkFuel" /> Benzin <br />
+                                    <input type="checkbox" id="chkFuel" /> Benzin & LPG <br />
+                                    <input type="checkbox" id="chkFuel" /> Dizel <br />
+                                    <input type="checkbox" id="chkFuel" /> Hybrid <br />
+                                    <input type="checkbox" id="chkFuel" /> Elektrik
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingSix">
+                                <h5 class="mb-0">
+                                    <button style="text-decoration:none;" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseThree">
+                                        Renk &emsp;&emsp;&emsp;&nbsp; <i class="fas fa-angle-down fa-rotate-270 js-rotate-if-collapsed"></i>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                                <div class="card-body">
+                                    <input type="checkbox" id="chkColor" /> Beyaz <br />
+                                    <input type="checkbox" id="chkColor" /> Bordo <br />
+                                    <input type="checkbox" id="chkColor" /> Gri <br />
+                                    <input type="checkbox" id="chkColor" /> Gümüş Gri <br />
+                                    <input type="checkbox" id="chkColor" /> Kahverengi <br />
+                                    <input type="checkbox" id="chkColor" /> Kırmızı <br />
+                                    <input type="checkbox" id="chkColor" /> Lacivert <br />
+                                    <input type="checkbox" id="chkColor" /> Mavi <br />
+                                    <input type="checkbox" id="chkColor" /> Siyah <br />
+                                    <input type="checkbox" id="chkColor" /> Yeşil <br />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingSeven">
+                                <h5 class="mb-0">
+                                    <button style="text-decoration:none;" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseThree">
+                                        Durumu &emsp;&nbsp;&nbsp;&nbsp; <i class="fas fa-angle-down fa-rotate-270 js-rotate-if-collapsed"></i>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+                                <div class="card-body">
+                                    <input type="radio" style="width:50px;" id="radioStatu" name="radioNew" /> Sıfır <br />
+                                    <input type="radio" style="width:50px;" id="radioStatu" name="radioOld" /> İkinci El
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <br /><button id="btnFilter" name="btnFilter" class="btn btn-success col-sm-12">ARA</button>
+                        </div>
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
