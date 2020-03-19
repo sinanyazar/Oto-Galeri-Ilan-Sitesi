@@ -1,1 +1,1 @@
-# Oto-Galeri-Ilan-Sitesi
+Proje bir ASP.Net MVC web uygulamasıdır. Proje çok katmanlı yazılım geliştirme metodolojilerine uygun bir şekilde yapıldı. Veritabanı olarak MS-SQL, uygulama içinde de Entity Framework DB First yaklaşımı kullanıldı. Projenin arayüz tasarımında ise Bootstrap, JavaScript, Jquery gibi eklentiler kullanıldı.)
