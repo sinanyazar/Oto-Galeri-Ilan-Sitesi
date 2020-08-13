@@ -8,6 +8,7 @@ using FactoryLayer.Services;
 
 namespace OtoGaleriWeb.Controllers
 {
+    [AllowAnonymous]
     public class UserController : Controller
     {
         private GaleriDBEntities _db = new GaleriDBEntities();

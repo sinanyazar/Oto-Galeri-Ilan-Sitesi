@@ -16,8 +16,11 @@ namespace OtoGaleriWeb.Controllers
         private List<Rates> _rateList = new List<Rates>();
 
         // GET: Admin
+        [Authorize]
         public ActionResult Index()
         {
+            ViewBag.UserName = Session["ActiveUser"].ToString();
+
             #region Hava Durumu
             string url = "https://www.mgm.gov.tr/FTPDATA/analiz/sonSOA.xml";
 
